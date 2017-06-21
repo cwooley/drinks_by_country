@@ -3,13 +3,20 @@ class Queries
 
   @@AVGPOOLSIZE = 63879
 
+  def get_country_by_name(name)
+    sql = "SELECT * FROM country_pop
+    JOIN drinks_by_country
+    ON country_pop.country_name = drinks_by_country.country
+    WHERE country_pop.country_name = '#{name}'"
+    attr_hash = DrinksByCountry.db.execute(sql)[0]
+    Country.new(attr_hash)
+  end
+
   def most_beer_by_volume
     sql = "SELECT * FROM country_pop
     JOIN drinks_by_country ON country_pop.country_name = drinks_by_country.country
     ORDER BY (country_pop.population * drinks_by_country.beer_servings) DESC LIMIT 1"
-
     attr_hash = DrinksByCountry.db.execute(sql)[0]
-
     most_beer_country = Country.new(attr_hash)
     puts "The country that drinks the most beer is #{most_beer_country.name}"
     puts "They drink #{most_beer_country.liters_of_beer} liters of beer every year"
@@ -20,13 +27,8 @@ class Queries
     DrinksByCountry.db.execute(sql)
   end
 
-  def pools_of_beer_by_country(country)
-    sql = "SELECT * FROM country_pop
-    JOIN drinks_by_country
-    ON country_pop.country_name = drinks_by_country.country
-    WHERE country_pop.country_name = '#{country}'"
-    attr_hash = DrinksByCountry.db.execute(sql)[0]
-    country = Country.new(attr_hash)
+  def pools_of_beer_by_country(country_name)
+    country = get_country_by_name(country_name)
     pools = country.pools_of_beer.to_i
     puts "#{country.name} drinks a total of #{pools} pools of beer every year...WOA"
   end
