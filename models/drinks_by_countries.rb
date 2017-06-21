@@ -8,7 +8,7 @@ class DrinksByCountry
 
   @@db.execute("DROP TABLE IF EXISTS drinks_by_country")
 
-  rows = @@db.execute <<-SQL
+  @@db.execute <<-SQL
     create table drinks_by_country (
       country_id INTEGER,
       drink_id INTEGER,
