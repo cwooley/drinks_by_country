@@ -33,35 +33,37 @@ class Queries
     puts "#{country.name} drinks a total of #{pools} pools of beer every year...WOA"
   end
 
-  def bathtubs_of_beer_by_country(country)
+  def bathtubs_of_beer_by_country(country_name)
 
   end
 
-  def central_park_lakes_of_beer_by_country(country)
+  def central_park_lakes_of_beer_by_country(country_name)
+    country = get_country_by_name(country_name)
+    lakes = country.central_park_lakes_of_beer
+    puts "#{country.name} drinks a total #{lakes} central park lakes of beer every year."
+  end
+
+  def pools_of_wine_by_country(country_name)
 
   end
 
-  def pools_of_wine_by_country(country)
+  def bathtubs_of_wine_by_country(country_name)
 
   end
 
-  def bathtubs_of_wine_by_country(country)
+  def central_park_lakes_of_wine_by_country(country_name)
 
   end
 
-  def central_park_lakes_of_wine_by_country(country)
+  def pools_of_spirits_by_country(country_name)
 
   end
 
-  def pools_of_spirits_by_country(country)
+  def bathtubs_of_spirits_by_country(country_name)
 
   end
 
-  def bathtubs_of_spirits_by_country(country)
-
-  end
-
-  def central_park_lakes_of_spirits_by_country(country)
+  def central_park_lakes_of_spirits_by_country(country_name)
 
   end
 
@@ -71,5 +73,6 @@ end
 
 query = Queries.new
 
-query.pools_of_beer_by_country("Canada")
+# query.pools_of_beer_by_country("Canada")
+query.central_park_lakes_of_beer_by_country("China")
 # puts query.pop_of_china

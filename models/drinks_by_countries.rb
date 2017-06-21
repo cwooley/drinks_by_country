@@ -1,4 +1,7 @@
-# require 'csv'
+require 'SQLite3'
+require "CSV"
+require "pry"
+
 class DrinksByCountry
   @@db = SQLite3::Database.new "drinks.db"
   @@db.results_as_hash = true
@@ -7,46 +10,36 @@ class DrinksByCountry
 
   rows = @@db.execute <<-SQL
     create table drinks_by_country (
-      country text,
-      beer_servings INTEGER,
-      spirit_servings INTEGER,
-      wine_servings INTEGER,
-      total_litres_of_pure_alcohol INTEGER
+      country_id INTEGER,
+      drink_id INTEGER,
+      consumption INTEGER
     );
   SQL
 
   csv = File.read("drinks.csv")
 
   CSV.parse(csv, headers: true) do |row|
-    @@db.execute "INSERT INTO drinks_by_country VALUES ( ?, ?, ?, ?, ? )", row.fields # equivalent to: [row['name'], row['age']]
+    country_id = @@db.execute "SELECT id FROM countries WHERE name = ?", row['country']
+    if country_id[0]
+      country_id =  country_id[0]["id"]
+      beer = row["beer_servings"]
+      wine = row["wine_servings"]
+      spirit = row["spirit_servings"]
+      pure = row["total_litres_of_pure_alcohol"]
+      # binding.pry
+      @@db.execute "INSERT INTO drinks_by_country VALUES ( ?, ?, ?)", [country_id, 1, beer]
+      @@db.execute "INSERT INTO drinks_by_country VALUES ( ?, ?, ?)", [country_id, 2, wine]
+      @@db.execute "INSERT INTO drinks_by_country VALUES ( ?, ?, ?)", [country_id, 3, spirit]
+      @@db.execute "INSERT INTO drinks_by_country VALUES ( ?, ?, ?)", [country_id, 4, pure]
+    end
   end
 
   def self.db
     @@db
   end
 
-  def self.most_beer
-   db.execute( "SELECT country, beer_servings FROM drinks_by_country ORDER BY beer_servings DESC LIMIT 1")
-  end
-
-  def self.least_beer
-    db.execute( "SELECT country, beer_servings FROM drinks_by_country WHERE beer_servings > 0 ORDER BY beer_servings LIMIT 1 ")
-  end
-
-  def self.most_wine
-    db.execute( "SELECT country, wine_servings FROM drinks_by_country ORDER BY wine_servings DESC LIMIT 1")
-  end
-
-  def self.least_wine
-    db.execute( "SELECT country, wine_servings FROM drinks_by_country WHERE wine_servings > 0 ORDER BY wine_servings LIMIT 1")
-  end
-
-  def self.most_spirits
-    db.execute( "SELECT country, spirit_servings FROM drinks_by_country ORDER BY spirit_servings DESC LIMIT 1")
-  end
-
-  def self.least_spirits
-    db.execute( "SELECT country, spirit_servings FROM drinks_by_country WHERE spirit_servings > 0 ORDER BY spirit_servings LIMIT 1")
+  def self.all
+    @@db.execute "SELECT * FROM drinks_by_country"
   end
 
 end

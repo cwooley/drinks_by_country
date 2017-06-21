@@ -6,6 +6,7 @@ class Country
   # central park resovoir 3800000000 liters
 
   @@AVGPOOLSIZE = 63879
+  @@CENTRALPARKRES = 3800000000
 
   def initialize(attr_hash)
     @name = attr_hash["country_name"]
@@ -14,8 +15,9 @@ class Country
     @spirit_servings = attr_hash["spirit_servings"]
     @population = attr_hash["population"]
   end
-
+  
   def liters_of_beer
+    # 12 oz of beer in a serving and 33.814 oz in a liter
     self.beer_servings * self.population * 12 / 33.814
   end
 
@@ -24,7 +26,7 @@ class Country
   end
 
   def central_park_lakes_of_beer
-
+    self.liters_of_beer / @@CENTRALPARKRES
   end
 
 end
