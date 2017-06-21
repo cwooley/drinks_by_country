@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 gem 'require_all'
 gem 'pry'
-gem 'sqLite3'
+gem 'SQLite3'
+gem 'csv'
+
 
 # gem 'rails'

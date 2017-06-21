@@ -1,6 +1,3 @@
-require 'csv'
-require 'SQLite3'
-require 'pry'
 class DrinksByCountry
   #MAKE NEW DATABASE FROM .CSV
   # @@db = SQLite3::Database.new ":memory:"

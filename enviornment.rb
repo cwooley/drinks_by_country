@@ -1,7 +1,6 @@
 require 'bundler'
-require 'require_all'
 Bundler.require
 
+require_all './models/'
+require_all './lib/'
 require_all '.'
-
-DB = {:conn => SQLite3::Database.new("drinks.db")}
