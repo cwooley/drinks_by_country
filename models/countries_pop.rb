@@ -23,5 +23,5 @@ class CountriesPop
     @@db
   end
 
-  
+
 end
