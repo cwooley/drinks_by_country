@@ -25,7 +25,10 @@ class Queries
     JOIN drinks_by_country
     ON country_pop.country_name = drinks_by_country.country
     WHERE country_pop.country_name = '#{country}'"
-    DrinksByCountry.db.execute(sql)
+    attr_hash = DrinksByCountry.db.execute(sql)[0]
+    country = Country.new(attr_hash)
+    pools = country.pools_of_beer.to_i
+    puts "#{country.name} drinks a total of #{pools} pools of beer every year...WOA"
   end
 
   def bathtubs_of_beer_by_country(country)
@@ -66,5 +69,5 @@ end
 
 query = Queries.new
 
-puts query.pools_of_beer_by_country("Canada")
+query.pools_of_beer_by_country("Canada")
 # puts query.pop_of_china

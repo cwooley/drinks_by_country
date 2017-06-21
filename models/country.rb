@@ -4,7 +4,9 @@ class Country
   # AVG POOL SIZE 15x 30 16,875 galleons volume = 63879 liters
   # Lake George has 550 billion gallons of water maybe we can compare by that too depending on quantity
   # central park resovoir 3800000000 liters
-  
+
+  @@AVGPOOLSIZE = 63879
+
   def initialize(attr_hash)
     @name = attr_hash["country_name"]
     @beer_servings = attr_hash["beer_servings"]
@@ -18,7 +20,7 @@ class Country
   end
 
   def pools_of_beer
-
+    self.liters_of_beer / @@AVGPOOLSIZE
   end
 
   def central_park_lakes_of_beer
