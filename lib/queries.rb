@@ -1,7 +1,12 @@
+require_relative '../enviornment.rb'
 class Queries
   # AVG POOL SIZE 15x 30 16,875 galleons volume = 63879 liters
   # Lake George has 550 billion gallons of water maybe we can compare by that too depending on quantity
-  @@AVGPOOLSIZE =
+  @@AVGPOOLSIZE = 63879
+  def most_beer
+    DrinksByCountry.most_beer
+  end
+
   def pools_of_beer_by_country(country)
 
   end
@@ -40,3 +45,8 @@ class Queries
 
 
 end
+
+
+query = Queries.new
+
+puts query.most_beer

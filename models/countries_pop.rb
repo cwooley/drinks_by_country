@@ -1,3 +1,4 @@
+require 'CSV'
 class CountriesPop
 
   @@db = SQLite3::Database.new "drinks.db"
@@ -16,6 +17,10 @@ class CountriesPop
 
   CSV.parse(csv, headers: true) do |row|
     @@db.execute "INSERT INTO country_pop VALUES ( ?, ? )", row.fields # equivalent to: [row['name'], row['age']]
+  end
+
+  def self.db
+    @@db
   end
 
   
