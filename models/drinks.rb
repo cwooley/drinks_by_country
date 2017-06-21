@@ -6,6 +6,8 @@ class Drinks
   @@db = SQLite3::Database.new "drinks.db"
   @@db.results_as_hash = true
 
+  @@db.execute("DROP TABLE IF EXISTS drinks")
+
   @@db.execute <<-SQL
     create table drinks (
       id INTEGER PRIMARY KEY,
@@ -27,4 +29,4 @@ class Drinks
   end
 end
 
-puts Drinks.all
+# puts Drinks.all
